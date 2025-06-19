@@ -1,12 +1,13 @@
 import 'dart:convert';
-import 'dart:io'; // 👈 Needed for SocketException
+import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:practice_waether_app/constant/app_string.dart';
 import 'package:practice_waether_app/model/weather.dart';
 
 class ApiService {
   Future<WeatherResponse> fetchWeather(String cityName) async {
-    final String url =
-        "https://api.openweathermap.org/data/2.5/weather?q=$cityName&appid=4a0909115c77f2ff8549441150de1ecf";
+    final url =
+        '${Constants.baseUrl}${Constants.weatherEndpoint}?q=$cityName&appid=${Constants.apiKey}';
 
     try {
       final response = await http.get(Uri.parse(url));

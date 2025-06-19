@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:practice_waether_app/constant/colors.dart';
 import 'package:practice_waether_app/model/weather.dart';
+import 'package:practice_waether_app/utils/date_format_utils.dart';
 import '../widgets/weather_detail_card.dart';
 
 class DetailedWeatherScreen extends StatelessWidget {
@@ -10,10 +11,7 @@ class DetailedWeatherScreen extends StatelessWidget {
 
   const DetailedWeatherScreen({super.key, required this.weatherResponse});
 
-  String _formatUnixTime(int unixTime) {
-    final date = DateTime.fromMillisecondsSinceEpoch(unixTime * 1000);
-    return DateFormat('hh:mm a').format(date);
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +135,7 @@ class DetailedWeatherScreen extends StatelessWidget {
                   ),
                   WeatherDetailCard(
                     title: 'Sunrise',
-                    value: _formatUnixTime(weatherResponse.weatherSys.sunrise),
+                    value: DateFormatUtils.formatUnixTime(weatherResponse.weatherSys.sunrise),
                     leadingIcon: const Icon(
                       Icons.wb_sunny,
                       color: AppColors.accent,
@@ -145,7 +143,7 @@ class DetailedWeatherScreen extends StatelessWidget {
                   ),
                   WeatherDetailCard(
                     title: 'Sunset',
-                    value: _formatUnixTime(weatherResponse.weatherSys.sunset),
+                  value: DateFormatUtils.formatUnixTime(weatherResponse.weatherSys.sunset),
                     leadingIcon: const Icon(
                       Icons.nights_stay,
                       color: AppColors.accent,
