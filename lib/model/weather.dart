@@ -11,9 +11,9 @@ class Weather {
 
   factory Weather.fromJson(Map<String, dynamic> json) {
     return Weather(
-      main: json['main'],
-      description: json['description'],
-      icon: json['icon'],
+      main: json['main']  ,
+      description: json['description']  ,
+      icon: json['icon']  ,
     );
   }
 }
@@ -86,7 +86,7 @@ class WeatherSys {
 
   factory WeatherSys.fromJson(Map<String, dynamic> json) {
     return WeatherSys(
-      country: json['country'],
+      country: json['country'] ?? "",
       sunrise: json['sunrise'],
       sunset: json['sunset'],
     );

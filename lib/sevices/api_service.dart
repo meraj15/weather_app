@@ -12,7 +12,6 @@ class ApiService {
     try {
       final response = await http.get(Uri.parse(url));
       final responseBody = jsonDecode(response.body);
-
       if (response.statusCode == 200) {
         return WeatherResponse.fromJson(responseBody);
       } else if (response.statusCode == 401 || response.statusCode == 404) {

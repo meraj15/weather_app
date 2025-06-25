@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:practice_waether_app/constant/colors.dart';
 import 'package:practice_waether_app/utils/dialog_utils.dart';
-import 'package:practice_waether_app/view/weather_detail_screen.dart';
 import 'package:practice_waether_app/view_model/weather_view_model.dart';
-import 'package:practice_waether_app/widgets/app_button.dart';
 import 'package:practice_waether_app/widgets/search_bar.dart';
 import 'package:practice_waether_app/widgets/weather_card.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +20,9 @@ class _WeatherAppState extends State<WeatherApp> {
   @override
   void initState() {
     super.initState();
-    context.read<WeatherViewModel>().fetchResponse(cityName);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<WeatherViewModel>().fetchResponse(cityName);
+    });
   }
 
   @override
@@ -30,7 +30,8 @@ class _WeatherAppState extends State<WeatherApp> {
     final weatherViewModel = Provider.of<WeatherViewModel>(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (weatherViewModel.errorMessage != null) {
+      if (weatherViewModel.errorMessage != null &&
+          weatherViewModel.errorMessage!.isNotEmpty) {
         DialogUtils.showErrorDialog(context, weatherViewModel.errorMessage!);
         weatherViewModel.clearError();
       }
@@ -48,17 +49,11 @@ class _WeatherAppState extends State<WeatherApp> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-   
-         WeatherSearchBar(userSearch: userSearch,),
+          WeatherSearchBar(userSearch: userSearch),
           const SizedBox(height: 15),
-
-          weatherViewModel.isLoading
-              ? const CircularProgressIndicator()
-              : WeatherCard(vm: weatherViewModel),
+          WeatherCard(vm: weatherViewModel), // 👈 Always show WeatherCard
         ],
       ),
     );
   }
-
-  
 }

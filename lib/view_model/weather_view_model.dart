@@ -23,6 +23,7 @@ class WeatherViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
+      await Future.delayed(const Duration(seconds: 2));
       _responseData = await apiService.fetchWeather(cityName);
     } catch (e) {
       _errorMessage = e.toString().replaceFirst("Exception: ", "");
